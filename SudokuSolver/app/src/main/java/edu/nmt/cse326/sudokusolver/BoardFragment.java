@@ -30,6 +30,8 @@ public class BoardFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_board, parent, false);
 
+        
+
         return view;
     }
 

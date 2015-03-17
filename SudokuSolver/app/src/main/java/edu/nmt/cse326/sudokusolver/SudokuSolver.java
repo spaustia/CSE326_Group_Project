@@ -25,7 +25,7 @@ public class SudokuSolver extends FragmentActivity {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new BoardFragment())
                     .commit();
-            
+
         }
 
     }
