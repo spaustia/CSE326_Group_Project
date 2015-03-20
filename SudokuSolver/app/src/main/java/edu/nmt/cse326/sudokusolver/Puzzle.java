@@ -1,6 +1,7 @@
 package edu.nmt.cse326.sudokusolver;
 
 import android.util.Log;
+import android.widget.Spinner;
 
 /**
  * Created by steve on 3/18/15.
@@ -8,10 +9,19 @@ import android.util.Log;
 public class Puzzle {
 
     private int[][] cells;
-    public static Puzzle sPuzzle;
+    public Spinner[] spinners;
+    private static Puzzle instance = null;
 
-    public Puzzle(){
+    public static Puzzle getInstance() {
+        if (instance == null) {
+            instance = new Puzzle();
+        }
+        return instance;
+    }
+
+    protected Puzzle(){
         cells = new int[9][9];
+        Log.d("Puzzle", "Creating Puzzle");
 
         for(int i = 0; i < 9; i++){
             for(int j = 0; j < 9; j++){
@@ -19,13 +29,33 @@ public class Puzzle {
             }
 
         }
-
-        sPuzzle = this;
-
     }
 
     public void setCell(int pos, int val){
+
+        if (val < 0 || val > 9) {
+            Log.d("Puzzle", "Attempt to set puzzle cell to out of range value: "+val);
+            val = 0;
+        }
         cells[pos/9][pos % 9] = val;
+        Log.d("Puzzle", "setPuzzle[" + pos + "] = " + cells[pos/9][pos%9]);
+    }
+
+    public int getCell(int pos) {
+        Log.d("Puzzle", "getPuzzle[" + pos + "] = " + cells[pos/9][pos%9]);
+        return cells[pos/9][pos%9];
+    }
+
+
+    public void clear() {
+        for(int i = 0; i < 9; i++){
+            for(int j = 0; j < 9; j++){
+                if (cells[i][j] != 0) {
+                    cells[i][j] = 0;
+                    spinners[i*9+j].setSelection(0);
+                }
+            }
+        }
     }
 
     public String toString(){

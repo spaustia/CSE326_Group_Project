@@ -1,5 +1,6 @@
 package edu.nmt.cse326.sudokusolver;
 
+import java.util.ArrayList;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -17,13 +18,14 @@ This fragment will contain the 9x9 board representing the puzzle
 */
 public class BoardFragment extends Fragment {
 
-    private List<Spinner> mSpinners;
+    //private List<Spinner> mSpinners;
+    private Spinner[] mSpinners;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
+        mSpinners = new Spinner[81];
+        Puzzle.getInstance().spinners = mSpinners;
     }
 
     @Override
@@ -32,11 +34,9 @@ public class BoardFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_board, parent, false);
 
-        new Puzzle();
-
         GridView gridview = (GridView) view.findViewById(R.id.gridview);
 
-        GridViewAdapter adapter = new GridViewAdapter(getActivity());
+        GridViewAdapter adapter = new GridViewAdapter(getActivity(), mSpinners);
         gridview.setAdapter(adapter);
 
 

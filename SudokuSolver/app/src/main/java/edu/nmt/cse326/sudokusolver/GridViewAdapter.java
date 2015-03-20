@@ -1,5 +1,6 @@
 package edu.nmt.cse326.sudokusolver;
 
+import java.util.ArrayList;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
@@ -16,15 +17,13 @@ import android.widget.Spinner;
 public class GridViewAdapter extends BaseAdapter {
 
     private Context mContext;
-    private Puzzle mPuzzle;
     private Spinner[] mSpinners;
     private ArrayAdapter<CharSequence> adapter;
 
-    public GridViewAdapter(Context c) {
+    public GridViewAdapter(Context c,Spinner[] spinnerArray) {
         mContext = c;
-        mSpinners = new Spinner[81];
+        mSpinners = spinnerArray;
         createSpinAdapter();
-        mPuzzle = Puzzle.sPuzzle;
     }
 
     public int getCount() {
@@ -46,21 +45,31 @@ public class GridViewAdapter extends BaseAdapter {
         if (convertView == null) {  // if it's not recycled, initialize some attributes
             mSpinner = new Spinner(mContext);
             mSpinner.setTag(position);
+            //mSpinner.setSelection(Puzzle.getInstance().getCell(position));
 
             mSpinner.setAdapter(adapter);
+
             mSpinners[position] = mSpinner;
 
+            //Log.d("Puzzle", "pos["+position+"] = "+Puzzle.getInstance().getCell(position));
+
             mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+//                public int check = 0;
+//
                 @Override
                 public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                     String val = String.valueOf(mSpinner.getSelectedItem());
-
+//                    if (check <= 1) {
+//                        Log.d("Puzzle", "Initial:Spinner["+mSpinner.getTag() + "] "+Puzzle.getInstance().getCell((int)mSpinner.getTag())+ "-> "+Integer.parseInt(val));
+//                        return;
+//                    }
                     if(Integer.parseInt(val) > -1) {
 
 
-                        mPuzzle.setCell( (int) mSpinner.getTag(), Integer.parseInt(val));
-                        Log.d("Puzzle", mPuzzle.toString());
-                        
+                        Log.d("Puzzle", "Spinner["+mSpinner.getTag() + "] "+Puzzle.getInstance().getCell((int)mSpinner.getTag())+ "-> "+Integer.parseInt(val));
+                        Puzzle.getInstance().setCell( (int) mSpinner.getTag(), Integer.parseInt(val));
+
                     }
                 }
 
@@ -73,7 +82,11 @@ public class GridViewAdapter extends BaseAdapter {
 
         } else {
             mSpinner = (Spinner) convertView;
+            //mSpinner.setSelection(Puzzle.getInstance().getCell(position));
         }
+
+
+        mSpinner.setSelection(Puzzle.getInstance().getCell(position));
 
         return mSpinner;
     }

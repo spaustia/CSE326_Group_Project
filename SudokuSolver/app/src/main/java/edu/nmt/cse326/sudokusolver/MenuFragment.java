@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.Spinner;
+import android.widget.Button;
 
 import java.util.List;
 
@@ -32,6 +33,12 @@ public class MenuFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_menu, parent, false);
 
+        Button clearButton = (Button) view.findViewById(R.id.clear_button);
+        clearButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            Puzzle.getInstance().clear();
+            }
+        });
 
         return view;
     }
