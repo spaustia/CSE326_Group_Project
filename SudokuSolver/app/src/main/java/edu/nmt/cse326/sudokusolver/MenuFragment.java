@@ -40,6 +40,27 @@ public class MenuFragment extends Fragment {
             }
         });
 
+        Button solveButton = (Button)view.findViewById(R.id.solve_button);
+        solveButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Puzzle.getInstance().solve();
+            }
+        });
+
+        Button saveButton = (Button)view.findViewById(R.id.save_button);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Puzzle.getInstance().saveFile("temp");
+            }
+        });
+
+        Button loadButton = (Button)view.findViewById(R.id.load_button);
+        loadButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Puzzle.getInstance().loadFile("temp");
+            }
+        });
+
         return view;
     }
 

@@ -19,10 +19,12 @@ public class GridViewAdapter extends BaseAdapter {
     private Context mContext;
     private Spinner[] mSpinners;
     private ArrayAdapter<CharSequence> adapter;
+    private AdapterView.OnItemSelectedListener mListener;
 
-    public GridViewAdapter(Context c,Spinner[] spinnerArray) {
+    public GridViewAdapter(Context c,Spinner[] spinnerArray, AdapterView.OnItemSelectedListener listener) {
         mContext = c;
         mSpinners = spinnerArray;
+        mListener = listener;
         createSpinAdapter();
     }
 
@@ -45,44 +47,15 @@ public class GridViewAdapter extends BaseAdapter {
         if (convertView == null) {  // if it's not recycled, initialize some attributes
             mSpinner = new Spinner(mContext);
             mSpinner.setTag(position);
-            //mSpinner.setSelection(Puzzle.getInstance().getCell(position));
 
             mSpinner.setAdapter(adapter);
 
             mSpinners[position] = mSpinner;
 
-            //Log.d("Puzzle", "pos["+position+"] = "+Puzzle.getInstance().getCell(position));
-
-            mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-//                public int check = 0;
-//
-                @Override
-                public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                    String val = String.valueOf(mSpinner.getSelectedItem());
-//                    if (check <= 1) {
-//                        Log.d("Puzzle", "Initial:Spinner["+mSpinner.getTag() + "] "+Puzzle.getInstance().getCell((int)mSpinner.getTag())+ "-> "+Integer.parseInt(val));
-//                        return;
-//                    }
-                    if(Integer.parseInt(val) > -1) {
-
-
-                        Log.d("Puzzle", "Spinner["+mSpinner.getTag() + "] "+Puzzle.getInstance().getCell((int)mSpinner.getTag())+ "-> "+Integer.parseInt(val));
-                        Puzzle.getInstance().setCell( (int) mSpinner.getTag(), Integer.parseInt(val));
-
-                    }
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parentView) {
-                    // your code here
-                }
-
-            });
+            mSpinner.setOnItemSelectedListener(mListener);
 
         } else {
             mSpinner = (Spinner) convertView;
-            //mSpinner.setSelection(Puzzle.getInstance().getCell(position));
         }
 
 

@@ -21,7 +21,6 @@ public class Puzzle {
 
     protected Puzzle(){
         cells = new int[9][9];
-        Log.d("Puzzle", "Creating Puzzle");
 
         for(int i = 0; i < 9; i++){
             for(int j = 0; j < 9; j++){
@@ -38,11 +37,19 @@ public class Puzzle {
             val = 0;
         }
         cells[pos/9][pos % 9] = val;
-        Log.d("Puzzle", "setPuzzle[" + pos + "] = " + cells[pos/9][pos%9]);
+    }
+
+    public void setCellAndSpinner(int pos, int val) {
+
+        if (val < 0 || val > 9) {
+            Log.d("Puzzle", "Attempt to set puzzle cell to out of range value: "+val);
+            val = 0;
+        }
+        cells[pos/9][pos % 9] = val;
+        spinners[pos].setSelection(val);
     }
 
     public int getCell(int pos) {
-        Log.d("Puzzle", "getPuzzle[" + pos + "] = " + cells[pos/9][pos%9]);
         return cells[pos/9][pos%9];
     }
 
@@ -56,6 +63,18 @@ public class Puzzle {
                 }
             }
         }
+    }
+
+    public void solve() {
+
+    }
+
+    public void saveFile(String filename) {
+
+    }
+
+    public void loadFile(String filename) {
+
     }
 
     public String toString(){
