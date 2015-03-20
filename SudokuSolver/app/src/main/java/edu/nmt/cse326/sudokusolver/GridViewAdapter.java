@@ -1,5 +1,6 @@
 package edu.nmt.cse326.sudokusolver;
 
+import java.util.ArrayList;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
@@ -16,15 +17,15 @@ import android.widget.Spinner;
 public class GridViewAdapter extends BaseAdapter {
 
     private Context mContext;
-    private Puzzle mPuzzle;
     private Spinner[] mSpinners;
     private ArrayAdapter<CharSequence> adapter;
+    private AdapterView.OnItemSelectedListener mListener;
 
-    public GridViewAdapter(Context c) {
+    public GridViewAdapter(Context c,Spinner[] spinnerArray, AdapterView.OnItemSelectedListener listener) {
         mContext = c;
-        mSpinners = new Spinner[81];
+        mSpinners = spinnerArray;
+        mListener = listener;
         createSpinAdapter();
-        mPuzzle = Puzzle.sPuzzle;
     }
 
     public int getCount() {
@@ -48,32 +49,17 @@ public class GridViewAdapter extends BaseAdapter {
             mSpinner.setTag(position);
 
             mSpinner.setAdapter(adapter);
+
             mSpinners[position] = mSpinner;
 
-            mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                    String val = String.valueOf(mSpinner.getSelectedItem());
-
-                    if(Integer.parseInt(val) > -1) {
-
-
-                        mPuzzle.setCell( (int) mSpinner.getTag(), Integer.parseInt(val));
-                        Log.d("Puzzle", mPuzzle.toString());
-                        
-                    }
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parentView) {
-                    // your code here
-                }
-
-            });
+            mSpinner.setOnItemSelectedListener(mListener);
 
         } else {
             mSpinner = (Spinner) convertView;
         }
+
+
+        mSpinner.setSelection(Puzzle.getInstance().getCell(position));
 
         return mSpinner;
     }
