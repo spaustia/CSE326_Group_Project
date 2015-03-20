@@ -9,6 +9,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Spinner;
+import android.view.LayoutInflater;
+
 
 /**
  * Created by steve on 3/18/15.
@@ -45,7 +47,11 @@ public class GridViewAdapter extends BaseAdapter {
         final Spinner mSpinner;
 
         if (convertView == null) {  // if it's not recycled, initialize some attributes
-            mSpinner = new Spinner(mContext);
+            //mSpinner = new Spinner(mContext);
+            final LayoutInflater inflater = LayoutInflater.from(mContext);
+            mSpinner = (Spinner)inflater.inflate(R.layout.spinner, parent, false);
+//            mSpinner.setMinimumHeight(mSpinner.getWidth());
+
             mSpinner.setTag(position);
 
             mSpinner.setAdapter(adapter);
@@ -58,6 +64,7 @@ public class GridViewAdapter extends BaseAdapter {
             mSpinner = (Spinner) convertView;
         }
 
+       mSpinner.getLayoutParams().height = (parent.getRootView().findViewById(R.id.gridview).getWidth()/9);
 
         mSpinner.setSelection(Puzzle.getInstance().getCell(position));
 

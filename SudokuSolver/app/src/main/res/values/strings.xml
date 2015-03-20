@@ -9,6 +9,9 @@
     <string name="save_button_text">Save</string>
     <string name="load_button_text">Load</string>
 
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
     <string-array name="spinner_array">
         <item>0</item>
         <item>1</item>
