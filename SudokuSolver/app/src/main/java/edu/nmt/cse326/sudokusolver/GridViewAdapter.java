@@ -64,7 +64,7 @@ public class GridViewAdapter extends BaseAdapter {
             mSpinner = (Spinner) convertView;
         }
 
-       mSpinner.getLayoutParams().height = (parent.getRootView().findViewById(R.id.gridview).getWidth()/9);
+        mSpinner.getLayoutParams().height = (parent.getRootView().findViewById(R.id.gridview).getWidth()/9);
 
         mSpinner.setSelection(Puzzle.getInstance().getCell(position));
 
