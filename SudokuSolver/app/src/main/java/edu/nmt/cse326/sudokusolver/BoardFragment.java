@@ -35,12 +35,13 @@ public class BoardFragment extends Fragment {
                 Spinner spinner = (Spinner)parentView;
                 String val = String.valueOf(spinner.getSelectedItem());
 
-                if(Integer.parseInt(val) > -1) {
-
-
-                    Puzzle.getInstance().setCell( (int) spinner.getTag(), Integer.parseInt(val));
+                int i_val = 0;
+                try {
+                    i_val = Integer.parseInt(val);
+                } catch (Exception e) {
 
                 }
+                Puzzle.getInstance().setCell( (int) spinner.getTag(), i_val);
             }
 
             @Override
