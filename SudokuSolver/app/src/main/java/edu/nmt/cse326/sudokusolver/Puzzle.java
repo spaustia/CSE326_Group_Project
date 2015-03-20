@@ -2,6 +2,8 @@ package edu.nmt.cse326.sudokusolver;
 
 import android.util.Log;
 import android.widget.Spinner;
+import android.content.Context;
+import java.io.*;
 
 /**
  * Created by steve on 3/18/15.
@@ -69,12 +71,40 @@ public class Puzzle {
 
     }
 
-    public void saveFile(String filename) {
+    public void saveFile(String filename, Context context) {
+        OutputStream out;
 
+        try {
+            File file = new File(context.getFilesDir(), filename);
+            out = new BufferedOutputStream(new FileOutputStream(file));
+            for(int i = 0; i < 81; i++) {
+                out.write(getCell(i));
+            }
+            out.close();
+
+        } catch(FileNotFoundException e) {
+            e.printStackTrace();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void loadFile(String filename) {
+    public void loadFile(String filename, Context context) {
+        InputStream in;
 
+        try {
+            File file = new File(context.getFilesDir(), filename);
+            in = new BufferedInputStream(new FileInputStream(file));
+            for(int i = 0; i < 81; i++) {
+                setCellAndSpinner(i, in.read());
+            }
+            in.close();
+
+        } catch(FileNotFoundException e) {
+            e.printStackTrace();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public String toString(){

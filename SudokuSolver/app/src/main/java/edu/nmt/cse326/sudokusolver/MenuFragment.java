@@ -50,14 +50,14 @@ public class MenuFragment extends Fragment {
         Button saveButton = (Button)view.findViewById(R.id.save_button);
         saveButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Puzzle.getInstance().saveFile("temp");
+                Puzzle.getInstance().saveFile("temp", getActivity());
             }
         });
 
         Button loadButton = (Button)view.findViewById(R.id.load_button);
         loadButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Puzzle.getInstance().loadFile("temp");
+                Puzzle.getInstance().loadFile("temp", getActivity());
             }
         });
 
