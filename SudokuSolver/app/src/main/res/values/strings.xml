@@ -11,6 +11,7 @@
 
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="green">#00FF00</color>
 
     <string-array name="spinner_array">
         <item>&#160;</item>
