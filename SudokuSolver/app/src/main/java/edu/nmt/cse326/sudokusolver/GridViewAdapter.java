@@ -1,8 +1,6 @@
 package edu.nmt.cse326.sudokusolver;
 
-import java.util.ArrayList;
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -50,6 +48,8 @@ public class GridViewAdapter extends BaseAdapter {
             //mSpinner = new Spinner(mContext);
             final LayoutInflater inflater = LayoutInflater.from(mContext);
             mSpinner = (Spinner)inflater.inflate(R.layout.spinner, parent, false);
+            setSpinnerForPosition(mSpinner, position);
+
 //            mSpinner.setMinimumHeight(mSpinner.getWidth());
 
             mSpinner.setTag(position);
@@ -62,13 +62,48 @@ public class GridViewAdapter extends BaseAdapter {
 
         } else {
             mSpinner = (Spinner) convertView;
+            setSpinnerForPosition(mSpinner, position);
+            mSpinner.setTag(position);
+
+            mSpinner.setAdapter(adapter);
+
+            mSpinners[position] = mSpinner;
+
+            mSpinner.setOnItemSelectedListener(mListener);
         }
 
         mSpinner.getLayoutParams().height = (parent.getRootView().findViewById(R.id.gridview).getWidth()/9);
+//        parent.getRootView().findViewById(R.id.gridview).setMinimumHeight(parent.getRootView().findViewById(R.id.gridview).getWidth());
 
         mSpinner.setSelection(Puzzle.getInstance().getCell(position));
 
         return mSpinner;
+    }
+
+    private void setSpinnerForPosition(Spinner spinner, int position) {
+        if (position % 3 == 0) {
+            if ((position / 9) % 3 == 0)
+                spinner.setBackgroundResource(R.drawable.spinner_background1);
+            else if ((position / 9) % 3 == 1)
+                spinner.setBackgroundResource(R.drawable.spinner_background4);
+            else
+                spinner.setBackgroundResource(R.drawable.spinner_background7);
+        } else if (position % 3 == 1) {
+            if ((position / 9) % 3 == 0)
+                spinner.setBackgroundResource(R.drawable.spinner_background2);
+            else if ((position / 9) % 3 == 1)
+                spinner.setBackgroundResource(R.drawable.spinner_background5);
+            else
+                spinner.setBackgroundResource(R.drawable.spinner_background8);
+        } else {
+            if ((position / 9) % 3 == 0)
+                spinner.setBackgroundResource(R.drawable.spinner_background3);
+            else if ((position / 9) % 3 == 1)
+                spinner.setBackgroundResource(R.drawable.spinner_background6);
+            else
+                spinner.setBackgroundResource(R.drawable.spinner_background9);
+        }
+
     }
 
     // Setup and return an ArrayAdapter for a spinner
