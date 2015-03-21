@@ -1,7 +1,7 @@
 Features
 
 - Fix horizontal layout to display puzzle to left and buttons to right
-- Add borders to 3x3 grid elements
+DONE - Add borders to 3x3 grid elements
 - Background to whole app
 - Get rid of SudokuSolver title
 - Implement or get rid of menu (three dots in upper right had corner)
