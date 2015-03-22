@@ -278,8 +278,33 @@ public class SudokuSolver
 					}
 				}
 			}
+			// Finally, check for puzzle linearity
+			clean = (clean & checkForLinearity());
+
 		}
 		while (clean != true);
+	}
+
+	/**
+	 * This implements an advanced solution algorithm, marking certain boxes impossible due to puzzle constraints on linearity.
+	 * 
+	 * @return true if nothing was marked, false if progress was made
+	 */
+	private boolean checkForLinearity()
+	{
+		boolean clean = true;
+		for (int i = 0; i < 9; i++)
+		{
+			// First, check for all possibilities for the row in the same box.
+
+			// Next, check for all possibilities for the column in the same box.
+
+			// Next, check for all possibilities for the same box in the same row.
+
+			// Next, check for all possibilities for the same box in the same column.
+		}
+
+		return clean;
 	}
 
 	/**
