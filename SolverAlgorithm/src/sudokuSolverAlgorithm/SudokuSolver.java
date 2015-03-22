@@ -56,7 +56,7 @@ public class SudokuSolver
 			}
 		}
 
-		// Next, fill out the solution array with what we're given, and the can't be array with what numbers can't be
+		// Next, fill out the solution array with what we're given, and clear the values in the can be array
 		for (int x = 0; x < 9; x++)
 		{
 			int[] a = input[x];
@@ -82,9 +82,25 @@ public class SudokuSolver
 	 */
 	private void mark(int x, int y, int num)
 	{
-		// First, add it to the solution array.
-		solution[x][y] = num;
+		// First, check to make sure the number can be there.
 		int i = num - 1;
+		// Solution array should be 0
+		if (solution[x][y] != 0)
+		{
+			System.out.println("ERROR: Attempted to mark " + x + "," + y + " as " + num + " but it was already marked as a " + solution[x][y]);
+			return;
+		}
+
+		// Should be allowed.
+		if (canbe[x][y][i] == false)
+		{
+			System.out.println("ERROR: Attempted to mark " + x + "," + y + " as " + num + " but it was already marked as can't be!");
+			return;
+		}
+
+		// It's allowed, so add it to the solution array.
+		solution[x][y] = num;
+
 		// Also it can't be anything else.
 		for (int j = 0; j < 9; j++)
 		{
