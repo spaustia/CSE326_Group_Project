@@ -28,6 +28,7 @@ public class SolverTester
 				input[x][y] = a;
 			}
 		}
+		keyboard.close();
 
 		// Instantiate the solver, and solve the puzzle.
 		System.out.println("Solving, please wait...");
@@ -37,11 +38,16 @@ public class SolverTester
 		System.out.println("Solution:");
 		for (int x = 0; x < 9; x++)
 		{
+			if (x % 3 == 0)
+				System.out.println();
 			for (int y = 0; y < 9; y++)
 			{
+				if (y % 3 == 0)
+					System.out.print(" ");
 				System.out.print(solution[x][y]);
 			}
 			System.out.println();
+
 		}
 
 	}
