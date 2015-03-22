@@ -28,12 +28,17 @@ public class SolverTester
 				input[x][y] = a;
 			}
 		}
-		System.out.println("You entered:");
+
+		// Instantiate the solver, and solve the puzzle.
+		SudokuSolver s = new SudokuSolver(input);
+		int[][] solution = s.solve();
+
+		System.out.println("Solution:");
 		for (int x = 0; x < 9; x++)
 		{
 			for (int y = 0; y < 9; y++)
 			{
-				System.out.print(input[x][y]);
+				System.out.print(solution[x][y]);
 			}
 			System.out.println();
 		}
