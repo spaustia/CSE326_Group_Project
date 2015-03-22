@@ -173,6 +173,7 @@ public class SudokuSolver
 		do
 		{
 			clean = true;
+			// First, check for squares that can be only one number.
 			for (int x = 0; x < 9; x++)
 			{
 				for (int y = 0; y < 9; y++)
@@ -193,6 +194,78 @@ public class SudokuSolver
 						if (numPossibilities == 1)
 						{
 							mark(x, y, num);
+							clean = false;
+						}
+					}
+				}
+			}
+			// Next, check for numbers that can only be in one place.
+			for (int i = 0; i < 9; i++)
+			{
+				int numPossibilities;
+				int num = 0;
+
+				// Check for every row
+				for (int x = 0; x < 9; x++)
+				{
+					numPossibilities = 0;
+					for (int y = 0; y < 9; y++)
+					{
+						if (canbe[x][y][i] == true)
+						{
+							numPossibilities++;
+							num = y;
+						}
+					}
+					if (numPossibilities == 1)
+					{
+						// Only one spot for this number on the row.
+						mark(x, num, i);
+						clean = false;
+					}
+				}
+
+				// Check for every column
+				for (int y = 0; y < 9; y++)
+				{
+					numPossibilities = 0;
+					for (int x = 0; x < 9; x++)
+					{
+						if (canbe[x][y][i])
+						{
+							numPossibilities++;
+							num = x;
+						}
+					}
+					if (numPossibilities == 1)
+					{
+						mark(num, y, i);
+						clean = false;
+					}
+				}
+				// Check for every box
+				for (int xoffset = 0; xoffset < 9; xoffset += 3)
+				{
+					for (int yoffset = 0; yoffset < 9; yoffset += 3)
+					{
+						numPossibilities = 0;
+						int xc = 0;
+						int yc = 0;
+						for (int x = 0; x < 3; x++)
+						{
+							for (int y = 0; y < 3; y++)
+							{
+								if (canbe[x + xoffset][y + yoffset][i] == true)
+								{
+									numPossibilities++;
+									xc = x + xoffset;
+									yc = y + yoffset;
+								}
+							}
+						}
+						if (numPossibilities == 1)
+						{
+							mark(xc, yc, i);
 							clean = false;
 						}
 					}
