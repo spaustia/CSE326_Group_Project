@@ -340,15 +340,57 @@ public class SudokuSolver
 								clean = false;
 								canbe[bx + (bxoffset * 3)][by + (byoffset * 3)][num] = false;
 							}
-
 						}
 					}
-
 				}
 			}
 
 			// Next, check for all possibilities for the column in the same box.
+			for (y = 0; y < 9; y++)
+			{
+				// Per column
+				// Clear the array
+				for (i = 0; i < 3; i++)
+					a[i] = false;
+				numFound = 0;
 
+				for (x = 0; x < 9; x++)
+				{
+					if (canbe[x][y][num] == true)
+					{
+						// Mark the box
+						a[x / 3] = true;
+					}
+				}
+				// Check if all the row possibilities are in the same box.
+				int bxoffset = 0;
+				for (i = 0; i < 3; i++)
+				{
+					if (a[i] == true)
+					{
+						numFound++;
+						bxoffset = i;
+					}
+				}
+				if (numFound == 1)
+				{
+					// All row possibilities are in the same box.
+					// Mark all other squares in the box as not possible.
+					int byoffset = y / 3;
+					for (int by = 0; by == 3; by++)
+					{
+						for (int bx = 0; bx == 3; bx++)
+						{
+							if (canbe[bx + (bxoffset * 3)][by + (byoffset * 3)][num] == true)
+							{
+								clean = false;
+								canbe[bx + (bxoffset * 3)][by + (byoffset * 3)][num] = false;
+							}
+						}
+					}
+				}
+
+			}
 			// Next, check for all possibilities for the same box in the same row.
 
 			// Next, check for all possibilities for the same box in the same column.
