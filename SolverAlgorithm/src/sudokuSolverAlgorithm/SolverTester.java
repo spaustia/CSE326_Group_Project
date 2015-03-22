@@ -30,6 +30,7 @@ public class SolverTester
 		}
 
 		// Instantiate the solver, and solve the puzzle.
+		System.out.println("Solving, please wait...");
 		SudokuSolver s = new SudokuSolver(input);
 		int[][] solution = s.solve();
 

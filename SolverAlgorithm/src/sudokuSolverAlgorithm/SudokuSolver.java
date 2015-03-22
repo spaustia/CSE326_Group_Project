@@ -169,9 +169,10 @@ public class SudokuSolver
 	 */
 	private void checkForOnePossibility()
 	{
-		boolean clean = true;
+		boolean clean;
 		do
 		{
+			clean = true;
 			for (int x = 0; x < 9; x++)
 			{
 				for (int y = 0; y < 9; y++)
