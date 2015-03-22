@@ -73,6 +73,20 @@ public class SudokuSolver
 
 		// Next, check if there's any values that can be only one thing.
 		checkForOnePossibility();
+
+		// Make sure the puzzle is still solvable
+		if (isImpossible() == true)
+		{
+			System.out.println("Puzzle is unsolvable!");
+			return null;
+		}
+
+		// Check to see if we solved it already.
+		if (isSolved())
+			return solution;
+
+		// Not solved, time for solution spanning tree.
+
 		return solution;
 	}
 
@@ -219,5 +233,26 @@ public class SudokuSolver
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Checks to see if the puzzle is solved
+	 * 
+	 * @return true if puzzle is complete, false otherwise.
+	 */
+	private boolean isSolved()
+	{
+		for (int x = 0; x < 9; x++)
+		{
+			for (int y = 0; y < 9; y++)
+			{
+				// Check to see if we need to fill in this spot
+				if (solution[x][y] == 0)
+				{
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 }
