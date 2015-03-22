@@ -5,7 +5,7 @@ public class SudokuSolver
 {
 	private int[][] input; // Stores the input
 	private int[][] solution; // Stores the solution
-	private boolean[][][] canbe; // Stores the values that can't be here.
+	private boolean[][][] canbe; // Stores the values that can be here.
 
 	/**
 	 * Creates a new instance of the solver.
@@ -15,7 +15,6 @@ public class SudokuSolver
 	public SudokuSolver(int[][] input)
 	{
 		this.input = input;
-
 	}
 
 	/**
@@ -220,7 +219,7 @@ public class SudokuSolver
 					if (numPossibilities == 1)
 					{
 						// Only one spot for this number on the row.
-						mark(x, num, i);
+						mark(x, num, i + 1);
 						clean = false;
 					}
 				}
@@ -239,7 +238,7 @@ public class SudokuSolver
 					}
 					if (numPossibilities == 1)
 					{
-						mark(num, y, i);
+						mark(num, y, i + 1);
 						clean = false;
 					}
 				}
@@ -265,7 +264,7 @@ public class SudokuSolver
 						}
 						if (numPossibilities == 1)
 						{
-							mark(xc, yc, i);
+							mark(xc, yc, i + 1);
 							clean = false;
 						}
 					}
