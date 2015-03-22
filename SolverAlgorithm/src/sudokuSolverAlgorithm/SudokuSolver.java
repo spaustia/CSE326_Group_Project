@@ -10,7 +10,7 @@ public class SudokuSolver
 	/**
 	 * Creates a new instance of the solver.
 	 * 
-	 * @param input 9x9 integer array consisting of the input. Unknown values should be 0.
+	 * @param input 9x9 integer array consisting of the input. Unknown values should be filled out to 0.
 	 */
 	public SudokuSolver(int[][] input)
 	{
@@ -18,7 +18,7 @@ public class SudokuSolver
 	}
 
 	/**
-	 * Solves the sudoku puzzle given the input specified in the constructor. Returns NULL on error.
+	 * Solves the sudoku puzzle given the input specified in the constructor. Returns NULL and prints out problem on error.
 	 * 
 	 * @return 9x9 integer array with solution, NULL on error.
 	 */
@@ -27,7 +27,7 @@ public class SudokuSolver
 		// First, check the size of the input.
 		if (input.length != 9)
 		{
-			System.out.println("Outer array is the wrong size! Should be 9, given " + input.length);
+			System.out.println("There should be 9 rows, but we were given " + input.length);
 			return null;
 		}
 		for (int i = 0; i < 9; i++)
@@ -35,7 +35,7 @@ public class SudokuSolver
 			int[] a = input[i];
 			if (a.length != 9)
 			{
-				System.out.println("Inner array [" + i + "] is the wrong size! Should be 9, given " + a.length);
+				System.out.println("On row " + i + "there should be 9 columns, but we were given " + a.length);
 				return null;
 			}
 		}
@@ -100,6 +100,7 @@ public class SudokuSolver
 	{
 		// First, check to make sure the number can be there.
 		int i = num - 1;
+
 		// Solution array should be 0
 		if (solution[x][y] != 0)
 		{
@@ -107,7 +108,7 @@ public class SudokuSolver
 			return;
 		}
 
-		// Should be allowed.
+		// Should be one of the entries in the can be array
 		if (canbe[x][y][i] == false)
 		{
 			System.out.println("ERROR: Attempted to mark " + x + "," + y + " as " + num + " but it was already marked as can't be!");
@@ -139,12 +140,14 @@ public class SudokuSolver
 		// First, set the offset for our box variables.
 		int joffset;
 		int koffset;
+
 		if (x < 3)
 			joffset = 0;
 		else if (x < 6)
 			joffset = 3;
 		else
 			joffset = 6;
+
 		if (y < 3)
 			koffset = 0;
 		else if (y < 6)
@@ -169,20 +172,25 @@ public class SudokuSolver
 	private void checkForOnePossibility()
 	{
 		boolean clean;
+		int numPossibilities = 0;
+		int num = 0, i = 0;
+		int xc = 0, yc = 0, x = 0, y = 0;
 		do
 		{
-			clean = true;
+			clean = true; // Used to see if we need to go back through and check again.
+
 			// First, check for squares that can be only one number.
-			for (int x = 0; x < 9; x++)
+			for (x = 0; x < 9; x++)
 			{
-				for (int y = 0; y < 9; y++)
+				for (y = 0; y < 9; y++)
 				{
 					// Check to see if we need to look at this spot.
 					if (solution[x][y] == 0)
 					{
-						int numPossibilities = 0;
-						int num = 0;
-						for (int i = 0; i < 9; i++)
+						// Check for just one possibility
+						numPossibilities = 0;
+						num = 0;
+						for (i = 0; i < 9; i++)
 						{
 							if (canbe[x][y][i] == true)
 							{
@@ -192,6 +200,7 @@ public class SudokuSolver
 						}
 						if (numPossibilities == 1)
 						{
+							// Only one possibility
 							mark(x, y, num);
 							clean = false;
 						}
@@ -199,16 +208,13 @@ public class SudokuSolver
 				}
 			}
 			// Next, check for numbers that can only be in one place.
-			for (int i = 0; i < 9; i++)
+			for (i = 0; i < 9; i++)
 			{
-				int numPossibilities;
-				int num = 0;
-
 				// Check for every row
-				for (int x = 0; x < 9; x++)
+				for (x = 0; x < 9; x++)
 				{
 					numPossibilities = 0;
-					for (int y = 0; y < 9; y++)
+					for (y = 0; y < 9; y++)
 					{
 						if (canbe[x][y][i] == true)
 						{
@@ -225,10 +231,10 @@ public class SudokuSolver
 				}
 
 				// Check for every column
-				for (int y = 0; y < 9; y++)
+				for (y = 0; y < 9; y++)
 				{
 					numPossibilities = 0;
-					for (int x = 0; x < 9; x++)
+					for (x = 0; x < 9; x++)
 					{
 						if (canbe[x][y][i])
 						{
@@ -238,6 +244,7 @@ public class SudokuSolver
 					}
 					if (numPossibilities == 1)
 					{
+						// Only one spot for this number on the column.
 						mark(num, y, i + 1);
 						clean = false;
 					}
@@ -248,11 +255,11 @@ public class SudokuSolver
 					for (int yoffset = 0; yoffset < 9; yoffset += 3)
 					{
 						numPossibilities = 0;
-						int xc = 0;
-						int yc = 0;
-						for (int x = 0; x < 3; x++)
+						xc = 0;
+						yc = 0;
+						for (x = 0; x < 3; x++)
 						{
-							for (int y = 0; y < 3; y++)
+							for (y = 0; y < 3; y++)
 							{
 								if (canbe[x + xoffset][y + yoffset][i] == true)
 								{
@@ -264,6 +271,7 @@ public class SudokuSolver
 						}
 						if (numPossibilities == 1)
 						{
+							// Only one spot for this number in the box.
 							mark(xc, yc, i + 1);
 							clean = false;
 						}
@@ -275,22 +283,23 @@ public class SudokuSolver
 	}
 
 	/**
-	 * Checks the solution for impossiblity to solve.
+	 * Checks the solution for impossibility to solve.
 	 * 
 	 * @return true if puzzle is impossible, false otherwise.
 	 */
 	private boolean isImpossible()
 	{
-
-		for (int x = 0; x < 9; x++)
+		int x, y, i, numPossibilities;
+		for (x = 0; x < 9; x++)
 		{
-			for (int y = 0; y < 9; y++)
+			for (y = 0; y < 9; y++)
 			{
 				// Check to see if we need to look at this spot.
 				if (solution[x][y] == 0)
 				{
-					int numPossibilities = 0;
-					for (int i = 0; i < 9; i++)
+					// We do, so make sure every square has at least one possibility
+					numPossibilities = 0;
+					for (i = 0; i < 9; i++)
 					{
 						if (canbe[x][y][i] == true)
 						{
@@ -299,6 +308,7 @@ public class SudokuSolver
 					}
 					if (numPossibilities == 0)
 					{
+						// No possibilities for this square
 						System.out.println("Can't solve, because " + x + "," + y + " has no possibilties!");
 						return true;
 					}
@@ -322,10 +332,12 @@ public class SudokuSolver
 				// Check to see if we need to fill in this spot
 				if (solution[x][y] == 0)
 				{
+					// We do, so puzzle isn't solved.
 					return false;
 				}
 			}
 		}
+		// Everything is filled in.
 		return true;
 	}
 }
