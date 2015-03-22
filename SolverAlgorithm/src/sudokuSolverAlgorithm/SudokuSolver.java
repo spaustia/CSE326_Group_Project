@@ -186,4 +186,38 @@ public class SudokuSolver
 		}
 		while (clean != true);
 	}
+
+	/**
+	 * Checks the solution for impossiblity to solve.
+	 * 
+	 * @return true if puzzle is impossible, false otherwise.
+	 */
+	private boolean isImpossible()
+	{
+
+		for (int x = 0; x < 9; x++)
+		{
+			for (int y = 0; y < 9; y++)
+			{
+				// Check to see if we need to look at this spot.
+				if (solution[x][y] == 0)
+				{
+					int numPossibilities = 0;
+					for (int i = 0; i < 9; i++)
+					{
+						if (canbe[x][y][i] == true)
+						{
+							numPossibilities++;
+						}
+					}
+					if (numPossibilities == 0)
+					{
+						System.out.println("Can't solve, because " + x + "," + y + " has no possibilties!");
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
 }
