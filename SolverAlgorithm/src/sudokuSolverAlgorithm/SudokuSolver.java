@@ -70,6 +70,9 @@ public class SudokuSolver
 				}
 			}
 		}
+
+		// Next, check if there's any values that can be only one thing.
+		checkForOnePossibility();
 		return solution;
 	}
 
@@ -144,5 +147,43 @@ public class SudokuSolver
 				canbe[j + joffset][k + koffset][i] = false;
 			}
 		}
+		// All done.
+	}
+
+	/**
+	 * Checks the solution for boxes that only have one possible value. Continues to run until it can't anymore.
+	 */
+	private void checkForOnePossibility()
+	{
+		boolean clean = true;
+		do
+		{
+			for (int x = 0; x < 9; x++)
+			{
+				for (int y = 0; y < 9; y++)
+				{
+					// Check to see if we need to look at this spot.
+					if (solution[x][y] == 0)
+					{
+						int numPossibilities = 0;
+						int num = 0;
+						for (int i = 0; i < 9; i++)
+						{
+							if (canbe[x][y][i] == true)
+							{
+								numPossibilities++;
+								num = i + 1;
+							}
+						}
+						if (numPossibilities == 1)
+						{
+							mark(x, y, num);
+							clean = false;
+						}
+					}
+				}
+			}
+		}
+		while (clean != true);
 	}
 }
