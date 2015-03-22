@@ -293,9 +293,59 @@ public class SudokuSolver
 	private boolean checkForLinearity()
 	{
 		boolean clean = true;
-		for (int i = 0; i < 9; i++)
+		boolean[] a = new boolean[3];
+		int x = 0, y = 0, i = 0, num = 0, numFound = 0;
+
+		for (num = 0; num < 9; num++)
 		{
 			// First, check for all possibilities for the row in the same box.
+			for (x = 0; x < 9; x++)
+			{
+				// Per Row
+
+				// Clear the array
+				for (i = 0; i < 3; i++)
+					a[i] = false;
+				numFound = 0;
+
+				for (y = 0; y < 9; y++)
+				{
+					if (canbe[x][y][num] == true)
+					{
+						// Mark the box
+						a[y / 3] = true;
+					}
+				}
+				// Check if all the row possibilities are in the same box.
+				int byoffset = 0;
+				for (i = 0; i < 3; i++)
+				{
+					if (a[i] == true)
+					{
+						numFound++;
+						byoffset = i;
+					}
+				}
+				if (numFound == 1)
+				{
+					// All row possibilities are in the same box.
+					// Mark all other squares in the box as not possible.
+					int bxoffset = x / 3;
+					for (int bx = 0; bx == 3; bx++)
+					{
+						for (int by = 0; by == 3; by++)
+						{
+							if (canbe[bx + (bxoffset * 3)][by + (byoffset * 3)][num] == true)
+							{
+								clean = false;
+								canbe[bx + (bxoffset * 3)][by + (byoffset * 3)][num] = false;
+							}
+
+						}
+					}
+
+				}
+			}
 
 			// Next, check for all possibilities for the column in the same box.
 
