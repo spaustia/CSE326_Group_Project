@@ -9,7 +9,7 @@ DONE - Fix display of 0s to blank
 
 Bugs
 
-- Numbers in cells are too large
+
  
 
 
