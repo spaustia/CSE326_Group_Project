@@ -84,8 +84,15 @@ public class SudokuSolver
 		if (isSolved())
 			return solution;
 
-		// Not solved, time for solution spanning tree.
+		// Not solved, time for advanced algorithm.
+		if (checkForLinearity() == false)
+			checkForOnePossibility();
 
+		if (isSolved())
+			return solution;
+
+		// Still not solved. Time to make a guess (AKA spanning tree)
+		// TODO
 		return solution;
 	}
 
@@ -292,9 +299,16 @@ public class SudokuSolver
 	 */
 	private boolean checkForLinearity()
 	{
+		// FIXME: This marks the whole linear section as can't be. We are supposed to ignore the ones that we found.
+
+		// FIXME: For temporary resolution so we can test integration:
+		return true;
+
+		/*
 		boolean clean = true;
 		boolean[] a = new boolean[3];
 		int x = 0, y = 0, i = 0, num = 0, numFound = 0;
+		int bx = 0, by = 0, bxoffset = 0, byoffset = 0;
 
 		for (num = 0; num < 9; num++)
 		{
@@ -317,7 +331,7 @@ public class SudokuSolver
 					}
 				}
 				// Check if all the row possibilities are in the same box.
-				int byoffset = 0;
+				byoffset = 0;
 				for (i = 0; i < 3; i++)
 				{
 					if (a[i] == true)
@@ -330,10 +344,10 @@ public class SudokuSolver
 				{
 					// All row possibilities are in the same box.
 					// Mark all other squares in the box as not possible.
-					int bxoffset = x / 3;
-					for (int bx = 0; bx == 3; bx++)
+					bxoffset = x / 3;
+					for (bx = 0; bx == 3; bx++)
 					{
-						for (int by = 0; by == 3; by++)
+						for (by = 0; by == 3; by++)
 						{
 							if (canbe[bx + (bxoffset * 3)][by + (byoffset * 3)][num] == true)
 							{
@@ -363,7 +377,7 @@ public class SudokuSolver
 					}
 				}
 				// Check if all the row possibilities are in the same box.
-				int bxoffset = 0;
+				bxoffset = 0;
 				for (i = 0; i < 3; i++)
 				{
 					if (a[i] == true)
@@ -376,10 +390,10 @@ public class SudokuSolver
 				{
 					// All row possibilities are in the same box.
 					// Mark all other squares in the box as not possible.
-					int byoffset = y / 3;
-					for (int by = 0; by == 3; by++)
+					byoffset = y / 3;
+					for (by = 0; by == 3; by++)
 					{
-						for (int bx = 0; bx == 3; bx++)
+						for (bx = 0; bx == 3; bx++)
 						{
 							if (canbe[bx + (bxoffset * 3)][by + (byoffset * 3)][num] == true)
 							{
@@ -392,11 +406,60 @@ public class SudokuSolver
 
 			}
 			// Next, check for all possibilities for the same box in the same row.
+			for (bxoffset = 0; bxoffset < 3; bxoffset++)
+			{
+				for (byoffset = 0; byoffset < 3; byoffset++)
+				{
+					// For each box
+					for (i = 0; i < 3; i++)
+					{
+						a[i] = false;
+					}
+					numFound = 0;
+
+					for (x = 0; x < 3; x++)
+					{
+						for (y = 0; y < 3; y++)
+						{
+							if (canbe[x + (bxoffset * 3)][y + (byoffset * 3)][num] == true)
+							{
+								// Mark the row
+								a[x] = true;
+							}
+						}
+					}
+
+					// Determine if all on the same row.
+					for (i = 0; i < 3; i++)
+					{
+						if (a[i] == true)
+						{
+							numFound++;
+							bx = i;
+						}
+					}
+					if (numFound == 1)
+					{
+						// All on the same row.
+						for (i = 0; i < 9; i++)
+						{
+							if (canbe[bx + (bxoffset * 3)][i][num] == true)
+							{
+								clean = false;
+								// TODO
+							}
+						}
+					}
+
+				}
+			}
 
 			// Next, check for all possibilities for the same box in the same column.
+			// TODO
 		}
 
 		return clean;
+		*/
 	}
 
 	/**
