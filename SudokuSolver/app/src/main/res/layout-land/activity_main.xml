@@ -7,18 +7,28 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity"
-    android:orientation="horizontal">
+    tools:context=".MainActivity">
+
+    <View android:id="@+id/strut"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerHorizontal="true"/>
 
     <fragment android:name="edu.nmt.cse326.sudokusolver.BoardFragment"
         android:id="@+id/board_frag"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/strut"
+     />
+
+
     <fragment android:name="edu.nmt.cse326.sudokusolver.MenuFragment"
         android:id="@+id/menu_frag"
-        android:layout_below="@id/board_frag"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/strut"
         android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"/>
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        />
 </RelativeLayout>
