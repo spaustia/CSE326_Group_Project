@@ -6,6 +6,7 @@ public class SudokuSolver
 	private int[][] input; // Stores the input
 	private int[][] solution; // Stores the solution
 	private boolean[][][] canbe; // Stores the values that can be here.
+	private int[][] testInput;
 
 	/**
 	 * Creates a new instance of the solver.
@@ -70,29 +71,67 @@ public class SudokuSolver
 			}
 		}
 
-		// Next, check if there's any values that can be only one thing.
-		checkForOnePossibility();
-
-		// Make sure the puzzle is still solvable
-		if (isImpossible() == true)
+		while (isSolved() == false)
 		{
-			System.out.println("Puzzle is unsolvable!");
-			return null;
-		}
-
-		// Check to see if we solved it already.
-		if (isSolved())
-			return solution;
-
-		// Not solved, time for advanced algorithm.
-		if (checkForLinearity() == false)
+			// Next, check if there's any values that can be only one thing.
 			checkForOnePossibility();
 
-		if (isSolved())
-			return solution;
+			// Make sure the puzzle is still solvable
+			if (isImpossible())
+			{
+				System.out.println("Puzzle is unsolvable!");
+				return null;
+			}
+			// Check to see if we solved it already.
+			if (isSolved())
+				return solution;
 
-		// Still not solved. Time to make a guess (AKA spanning tree)
-		// TODO
+			// Not solved, time for advanced algorithm.
+			System.out.println("Trying advanced linearity algorithm.");
+			if (checkForLinearity() == false)
+				checkForOnePossibility();
+
+			if (isSolved())
+				return solution;
+
+			// Still not solved. Time to make a guess (AKA spanning tree)
+			System.out.println("Still not solved. Making a guess.");
+			int guessX = -1, guessY = -1, guessI = -1;
+			testInput = new int[9][9];
+			for (int x = 0; x < 9; x++)
+			{
+				for (int y = 0; y < 9; y++)
+				{
+					testInput[x][y] = solution[x][y];
+					if (guessI == -1)
+					{
+						for (int i = 0; i < 9; i++)
+						{
+							if (canbe[x][y][i] == true)
+							{
+								testInput[x][y] = i + 1;
+								guessX = x;
+								guessY = y;
+								guessI = i;
+								System.out.println("Guessing that " + x + "," + y + " is " + (i + 1) + ".");
+								break;
+							}
+						}
+					}
+				}
+			}
+			SudokuSolver n = new SudokuSolver(testInput);
+			testInput = n.solve();
+			if (testInput == null)
+			{
+				// Wrong guess
+				System.out.println("Bad guess.");
+				canbe[guessX][guessY][guessI] = false;
+			}
+			else
+				return testInput;
+
+		}
 		return solution;
 	}
 
@@ -390,7 +429,7 @@ public class SudokuSolver
 					byoffset = y / 3;
 					for (int i = 0; i < 3; i++)
 					{
-						for (int j = 0; j <= 3; j++)
+						for (int j = 0; j < 3; j++)
 						{
 							if (byoffset * 3 + j != y)
 							{
@@ -506,7 +545,7 @@ public class SudokuSolver
 				boolean found = false;
 				for (y = 0; y < 9; y++)
 				{
-					if (solution[x][y] == i)
+					if (solution[x][y] == i + 1)
 					{
 						// Solution has the number.
 						found = true;
@@ -533,7 +572,7 @@ public class SudokuSolver
 				boolean found = false;
 				for (x = 0; x < 9; x++)
 				{
-					if (solution[x][y] == i)
+					if (solution[x][y] == i + 1)
 					{
 						found = true;
 						break;
@@ -563,7 +602,7 @@ public class SudokuSolver
 					{
 						for (y = 0; y < 3; y++)
 						{
-							if (solution[x + xm * 3][y + ym * 3] == i)
+							if (solution[x + xm * 3][y + ym * 3] == i + 1)
 							{
 								found = true;
 								break;
