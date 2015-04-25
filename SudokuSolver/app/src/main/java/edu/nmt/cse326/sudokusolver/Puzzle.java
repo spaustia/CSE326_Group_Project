@@ -84,7 +84,9 @@ public class Puzzle
 
 	public void solve()
 	{
-
+		Solver s = new Solver(cells)
+		int [][] solution = s.solve();
+		cells = solution;
 	}
 
 	public void saveFile(String filename, Context context)
