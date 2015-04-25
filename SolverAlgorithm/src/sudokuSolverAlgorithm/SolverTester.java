@@ -32,8 +32,11 @@ public class SolverTester
 
 		// Instantiate the solver, and solve the puzzle.
 		System.out.println("Solving, please wait...");
+		long time = System.currentTimeMillis();
 		SudokuSolver s = new SudokuSolver(input);
 		int[][] solution = s.solve();
+		long timeSolved = System.currentTimeMillis() - time;
+		System.out.println("Solved in " + timeSolved + " milliseconds.");
 
 		System.out.println("Solution:");
 		for (int x = 0; x < 9; x++)
