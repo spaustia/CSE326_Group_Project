@@ -301,10 +301,6 @@ public class SudokuSolver
 	{
 		// FIXME: This marks the whole linear section as can't be. We are supposed to ignore the ones that we found.
 
-		// FIXME: For temporary resolution so we can test integration:
-		return true;
-
-		/*
 		boolean clean = true;
 		boolean[] a = new boolean[3];
 		int x = 0, y = 0, i = 0, num = 0, numFound = 0;
@@ -459,7 +455,6 @@ public class SudokuSolver
 		}
 
 		return clean;
-		*/
 	}
 
 	/**
@@ -493,6 +488,100 @@ public class SudokuSolver
 						return true;
 					}
 				}
+			}
+		}
+		// Check to make sure every row, column, and box has one of each number.
+		for (i = 0; i < 9; i++)
+		{
+			// First, every row
+			for (x = 0; x < 9; x++)
+			{
+				boolean found = false;
+				for (y = 0; y < 9; y++)
+				{
+					if (solution[x][y] == i)
+					{
+						// Solution has the number.
+						found = true;
+						break;
+					}
+					else
+					{
+						if (canbe[x][y][i] == true)
+						{
+							found = true;
+							break;
+						}
+					}
+				}
+				if (found == false)
+				{
+					System.out.println("Cannot find " + i + " in row " + x + ".");
+					return true;
+				}
+			}
+			// Next, every column
+			for (y = 0; y < 9; y++)
+			{
+				boolean found = false;
+				for (x = 0; x < 9; x++)
+				{
+					if (solution[x][y] == i)
+					{
+						found = true;
+						break;
+					}
+					else
+					{
+						if (canbe[x][y][i] == true)
+						{
+							found = true;
+							break;
+						}
+					}
+				}
+				if (found == false)
+				{
+					System.out.println("Cannot find " + i + " in column " + y + ".");
+					return true;
+				}
+			}
+			// Next, every box
+			for (int xm = 0; xm < 3; xm++)
+			{
+				for (int ym = 0; ym < 3; ym++)
+				{
+					boolean found = false;
+					for (x = 0; x < 3; x++)
+					{
+						for (y = 0; y < 3; y++)
+						{
+							if (solution[x + xm * 3][y + ym * 3] == i)
+							{
+								found = true;
+								break;
+							}
+							else
+							{
+								if (canbe[x + xm * 3][y + ym * 3][i] == true)
+								{
+									found = true;
+									break;
+								}
+							}
+						}
+						if (found == true)
+						{
+							break;
+						}
+					}
+					if (found == false)
+					{
+						System.out.println("Cannot find " + i + " in box " + xm + "," + ym + ".");
+						return true;
+					}
+				}
+
 			}
 		}
 		return false;
