@@ -299,12 +299,10 @@ public class SudokuSolver
 	 */
 	private boolean checkForLinearity()
 	{
-		// FIXME: This marks the whole linear section as can't be. We are supposed to ignore the ones that we found.
-
 		boolean clean = true;
 		boolean[] a = new boolean[3];
-		int x = 0, y = 0, i = 0, num = 0, numFound = 0;
-		int bx = 0, by = 0, bxoffset = 0, byoffset = 0;
+		int x = 0, y = 0, num = 0, numFound = 0;
+		int bxoffset = 0, byoffset = 0;
 
 		for (num = 0; num < 9; num++)
 		{
@@ -314,7 +312,7 @@ public class SudokuSolver
 				// Per Row
 
 				// Clear the array
-				for (i = 0; i < 3; i++)
+				for (int i = 0; i < 3; i++)
 					a[i] = false;
 				numFound = 0;
 
@@ -328,7 +326,7 @@ public class SudokuSolver
 				}
 				// Check if all the row possibilities are in the same box.
 				byoffset = 0;
-				for (i = 0; i < 3; i++)
+				for (int i = 0; i < 3; i++)
 				{
 					if (a[i] == true)
 					{
@@ -341,14 +339,17 @@ public class SudokuSolver
 					// All row possibilities are in the same box.
 					// Mark all other squares in the box as not possible.
 					bxoffset = x / 3;
-					for (bx = 0; bx == 3; bx++)
+					for (int i = 0; i < 3; i++)
 					{
-						for (by = 0; by == 3; by++)
+						for (int j = 0; j < 3; j++)
 						{
-							if (canbe[bx + (bxoffset * 3)][by + (byoffset * 3)][num] == true)
+							if (bxoffset * 3 + i != x)
 							{
-								clean = false;
-								canbe[bx + (bxoffset * 3)][by + (byoffset * 3)][num] = false;
+								if (canbe[bxoffset * 3 + i][byoffset * 3 + j][num] == true)
+								{
+									clean = false;
+									canbe[bxoffset * 3 + i][byoffset * 3 + j][num] = false;
+								}
 							}
 						}
 					}
@@ -360,7 +361,7 @@ public class SudokuSolver
 			{
 				// Per column
 				// Clear the array
-				for (i = 0; i < 3; i++)
+				for (int i = 0; i < 3; i++)
 					a[i] = false;
 				numFound = 0;
 
@@ -372,9 +373,9 @@ public class SudokuSolver
 						a[x / 3] = true;
 					}
 				}
-				// Check if all the row possibilities are in the same box.
+				// Check if all the column possibilities are in the same box.
 				bxoffset = 0;
-				for (i = 0; i < 3; i++)
+				for (int i = 0; i < 3; i++)
 				{
 					if (a[i] == true)
 					{
@@ -387,14 +388,17 @@ public class SudokuSolver
 					// All row possibilities are in the same box.
 					// Mark all other squares in the box as not possible.
 					byoffset = y / 3;
-					for (by = 0; by == 3; by++)
+					for (int i = 0; i < 3; i++)
 					{
-						for (bx = 0; bx == 3; bx++)
+						for (int j = 0; j <= 3; j++)
 						{
-							if (canbe[bx + (bxoffset * 3)][by + (byoffset * 3)][num] == true)
+							if (byoffset * 3 + j != y)
 							{
-								clean = false;
-								canbe[bx + (bxoffset * 3)][by + (byoffset * 3)][num] = false;
+								if (canbe[bxoffset * 3 + i][byoffset * 3 + j][num] == true)
+								{
+									clean = false;
+									canbe[bxoffset * 3 + i][byoffset * 3 + j][num] = false;
+								}
 							}
 						}
 					}
@@ -402,6 +406,8 @@ public class SudokuSolver
 
 			}
 			// Next, check for all possibilities for the same box in the same row.
+
+			/*
 			for (bxoffset = 0; bxoffset < 3; bxoffset++)
 			{
 				for (byoffset = 0; byoffset < 3; byoffset++)
@@ -452,6 +458,7 @@ public class SudokuSolver
 
 			// Next, check for all possibilities for the same box in the same column.
 			// TODO
+			*/
 		}
 
 		return clean;
