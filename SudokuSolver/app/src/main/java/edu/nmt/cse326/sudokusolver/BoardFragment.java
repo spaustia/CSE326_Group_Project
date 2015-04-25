@@ -1,3 +1,4 @@
+
 package edu.nmt.cse326.sudokusolver;
 
 import java.util.ArrayList;
@@ -14,59 +15,63 @@ import java.util.ArrayList;
 import java.util.List;
 
 /*
+ * This fragment will contain the 9x9 board representing the puzzle
+ */
+public class BoardFragment extends Fragment
+{
 
-This fragment will contain the 9x9 board representing the puzzle
+	private Spinner[] mSpinners;
+	private AdapterView.OnItemSelectedListener spinnerListener;
 
-*/
-public class BoardFragment extends Fragment {
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		mSpinners = new Spinner[81];
 
-    private Spinner[] mSpinners;
-    private AdapterView.OnItemSelectedListener spinnerListener;
+		spinnerListener = new AdapterView.OnItemSelectedListener()
+		{
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mSpinners = new Spinner[81];
+			@Override
+			public void onItemSelected(AdapterView <?> parentView, View selectedItemView, int position, long id)
+			{
+				Spinner spinner = (Spinner)parentView;
+				String val = String.valueOf(spinner.getSelectedItem());
 
-        spinnerListener = new AdapterView.OnItemSelectedListener() {
+				int i_val = 0;
+				try
+				{
+					i_val = Integer.parseInt(val);
+				}
+				catch (Exception e)
+				{
 
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                Spinner spinner = (Spinner)parentView;
-                String val = String.valueOf(spinner.getSelectedItem());
+				}
+				Puzzle.getInstance().setCell((int)spinner.getTag(), i_val);
+			}
 
-                int i_val = 0;
-                try {
-                    i_val = Integer.parseInt(val);
-                } catch (Exception e) {
+			@Override
+			public void onNothingSelected(AdapterView <?> parentView)
+			{
+				// your code here
+			}
 
-                }
-                Puzzle.getInstance().setCell( (int) spinner.getTag(), i_val);
-            }
+		};
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
-            }
+		Puzzle.getInstance().spinners = mSpinners;
+	}
 
-        };
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
+	{
+		View view = inflater.inflate(R.layout.fragment_board, parent, false);
 
-        Puzzle.getInstance().spinners = mSpinners;
-    }
+		GridView gridview = (GridView)view.findViewById(R.id.gridview);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater,
-                             ViewGroup parent,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_board, parent, false);
+		GridViewAdapter adapter = new GridViewAdapter(getActivity(), mSpinners, spinnerListener);
+		gridview.setAdapter(adapter);
 
-        GridView gridview = (GridView) view.findViewById(R.id.gridview);
-
-        GridViewAdapter adapter = new GridViewAdapter(getActivity(), mSpinners, spinnerListener);
-        gridview.setAdapter(adapter);
-
-
-        return view;
-    }
+		return view;
+	}
 
 }

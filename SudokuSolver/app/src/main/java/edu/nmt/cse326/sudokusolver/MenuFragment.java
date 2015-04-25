@@ -1,3 +1,4 @@
+
 package edu.nmt.cse326.sudokusolver;
 
 import android.os.Bundle;
@@ -12,56 +13,62 @@ import android.widget.Button;
 import java.util.List;
 
 /*
+ * This fragment will contain the 9x9 board representing the puzzle
+ */
+public class MenuFragment extends Fragment
+{
 
-This fragment will contain the 9x9 board representing the puzzle
+	private List <Spinner> mSpinners;
 
-*/
-public class MenuFragment extends Fragment {
+	@Override
+	public void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
 
-    private List<Spinner> mSpinners;
+	}
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
+	{
+		View view = inflater.inflate(R.layout.fragment_menu, parent, false);
 
+		Button clearButton = (Button)view.findViewById(R.id.clear_button);
+		clearButton.setOnClickListener(new View.OnClickListener()
+		{
+			public void onClick(View v)
+			{
+				Puzzle.getInstance().clear();
+			}
+		});
 
-    }
+		Button solveButton = (Button)view.findViewById(R.id.solve_button);
+		solveButton.setOnClickListener(new View.OnClickListener()
+		{
+			public void onClick(View v)
+			{
+				Puzzle.getInstance().solve();
+			}
+		});
 
-    @Override
-    public View onCreateView(LayoutInflater inflater,
-                             ViewGroup parent,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_menu, parent, false);
+		Button saveButton = (Button)view.findViewById(R.id.save_button);
+		saveButton.setOnClickListener(new View.OnClickListener()
+		{
+			public void onClick(View v)
+			{
+				Puzzle.getInstance().saveFile("temp", getActivity());
+			}
+		});
 
-        Button clearButton = (Button) view.findViewById(R.id.clear_button);
-        clearButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-            Puzzle.getInstance().clear();
-            }
-        });
+		Button loadButton = (Button)view.findViewById(R.id.load_button);
+		loadButton.setOnClickListener(new View.OnClickListener()
+		{
+			public void onClick(View v)
+			{
+				Puzzle.getInstance().loadFile("temp", getActivity());
+			}
+		});
 
-        Button solveButton = (Button)view.findViewById(R.id.solve_button);
-        solveButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Puzzle.getInstance().solve();
-            }
-        });
-
-        Button saveButton = (Button)view.findViewById(R.id.save_button);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Puzzle.getInstance().saveFile("temp", getActivity());
-            }
-        });
-
-        Button loadButton = (Button)view.findViewById(R.id.load_button);
-        loadButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Puzzle.getInstance().loadFile("temp", getActivity());
-            }
-        });
-
-        return view;
-    }
+		return view;
+	}
 
 }
