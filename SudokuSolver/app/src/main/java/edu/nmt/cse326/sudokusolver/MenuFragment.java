@@ -55,7 +55,9 @@ public class MenuFragment extends Fragment
 		{
 			public void onClick(View v)
 			{
-				Puzzle.getInstance().saveFile("temp", getActivity());
+                SaveDialogFragment fragment = new SaveDialogFragment();
+                fragment.show(getActivity().getFragmentManager(), "Save");
+//				Puzzle.getInstance().saveFile("temp", getActivity());
 			}
 		});
 
@@ -64,7 +66,8 @@ public class MenuFragment extends Fragment
 		{
 			public void onClick(View v)
 			{
-				Puzzle.getInstance().loadFile("temp", getActivity());
+                LoadDialogFragment fragment = new LoadDialogFragment();
+                fragment.show(getActivity().getFragmentManager(), "Load");
 			}
 		});
 

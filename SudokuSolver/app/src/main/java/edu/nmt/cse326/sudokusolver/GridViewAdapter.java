@@ -2,6 +2,7 @@
 package edu.nmt.cse326.sudokusolver;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -22,10 +23,10 @@ public class GridViewAdapter extends BaseAdapter
 	private ArrayAdapter <CharSequence> adapter;
 	private AdapterView.OnItemSelectedListener mListener;
 
-	public GridViewAdapter(Context c, Spinner[] spinnerArray, AdapterView.OnItemSelectedListener listener)
+	public GridViewAdapter(Context c, AdapterView.OnItemSelectedListener listener)
 	{
 		mContext = c;
-		mSpinners = spinnerArray;
+		mSpinners = new Spinner[81];
 		mListener = listener;
 		createSpinAdapter();
 	}

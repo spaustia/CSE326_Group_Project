@@ -2,6 +2,8 @@
 package edu.nmt.cse326.sudokusolver;
 
 import java.util.ArrayList;
+
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -9,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.TextView;
 import android.widget.GridView;
 import android.widget.Spinner;
 import java.util.ArrayList;
@@ -28,6 +31,7 @@ public class BoardFragment extends Fragment
 	{
 		super.onCreate(savedInstanceState);
 		mSpinners = new Spinner[81];
+        Puzzle.getInstance().board = this;
 
 		spinnerListener = new AdapterView.OnItemSelectedListener()
 		{
@@ -58,7 +62,6 @@ public class BoardFragment extends Fragment
 
 		};
 
-		Puzzle.getInstance().spinners = mSpinners;
 	}
 
 	@Override
@@ -68,7 +71,7 @@ public class BoardFragment extends Fragment
 
 		GridView gridview = (GridView)view.findViewById(R.id.gridview);
 
-		GridViewAdapter adapter = new GridViewAdapter(getActivity(), mSpinners, spinnerListener);
+		GridViewAdapter adapter = new GridViewAdapter(getActivity(), spinnerListener);
 		gridview.setAdapter(adapter);
 
 		return view;

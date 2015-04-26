@@ -1,9 +1,12 @@
 
 package edu.nmt.cse326.sudokusolver;
 
+import android.graphics.Color;
 import android.util.Log;
 import android.widget.Spinner;
 import android.content.Context;
+import android.widget.TextView;
+
 import java.io.*;
 
 /**
@@ -13,8 +16,8 @@ public class Puzzle
 {
 
 	private int[][] cells;
-	public Spinner[] spinners;
 	private static Puzzle instance = null;
+    public BoardFragment board;
 
 	public static Puzzle getInstance()
 	{
@@ -57,10 +60,16 @@ public class Puzzle
 		{
 			Log.d("Puzzle", "Attempt to set puzzle cell to out of range value: " + val);
 			val = 0;
-		}
+    }
 		cells[pos / 9][pos % 9] = val;
-		spinners[pos].setSelection(val);
-	}
+
+        /* I don't know why this happens, but sometimes the spinner with the appropriate tag isn't found */
+        if ((Spinner)board.getView().findViewWithTag(pos) != null) {
+            ((Spinner)board.getView().findViewWithTag(pos)).setSelection(val);
+
+        }
+
+    }
 
 	public int getCell(int pos)
 	{
@@ -76,7 +85,7 @@ public class Puzzle
 				if (cells[i][j] != 0)
 				{
 					cells[i][j] = 0;
-					spinners[i * 9 + j].setSelection(0);
+                    ((Spinner)board.getView().findViewWithTag(i*9+j)).setSelection(0);
 				}
 			}
 		}
@@ -84,9 +93,26 @@ public class Puzzle
 
 	public void solve()
 	{
-		Solver s = new Solver(cells)
+//        boolean[][] changed = new boolean[9][9];
+//        for (int i = 0; i < 9; i++) {
+//            for (int j = 0; j < 9; j++) {
+//                changed[i][j] = (cells[i][j] == 0);
+//            }
+//        }
+		Solver s = new Solver(cells);
 		int [][] solution = s.solve();
-		cells = solution;
+        if (solution == null)
+            return;
+
+        //Update the spinners
+//        for (int i = 0; i < 9; i++) {
+//            for (int j = 0; j < 9; j++) {
+//                setCellAndSpinner(i * 9 + j, solution[i][j]);
+//                if (!changed[i][j]) {
+//                    ((TextView)((Spinner)board.getView().findViewWithTag(i*9+j)).getChildAt(0)).setTextColor(Color.BLACK);
+//                }
+//            }
+//        }
 	}
 
 	public void saveFile(String filename, Context context)
@@ -116,6 +142,12 @@ public class Puzzle
 
 	public void loadFile(String filename, Context context)
 	{
+        Log.d("load", "Entering\n");
+        if (filename == null)
+            Log.d("load", "null filename\n");
+        if (context == null)
+            Log.d("load", "null context\n");
+
 		InputStream in;
 
 		try
@@ -131,11 +163,11 @@ public class Puzzle
 		}
 		catch (FileNotFoundException e)
 		{
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 	}
 
