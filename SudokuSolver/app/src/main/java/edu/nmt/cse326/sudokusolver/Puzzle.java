@@ -104,15 +104,12 @@ public class Puzzle
         if (solution == null)
             return;
 
-        //Update the spinners
-//        for (int i = 0; i < 9; i++) {
-//            for (int j = 0; j < 9; j++) {
-//                setCellAndSpinner(i * 9 + j, solution[i][j]);
-//                if (!changed[i][j]) {
-//                    ((TextView)((Spinner)board.getView().findViewWithTag(i*9+j)).getChildAt(0)).setTextColor(Color.BLACK);
-//                }
-//            }
-//        }
+//        Update the spinners
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                setCellAndSpinner(i * 9 + j, solution[i][j]);
+            }
+        }
 	}
 
 	public void saveFile(String filename, Context context)
@@ -142,12 +139,6 @@ public class Puzzle
 
 	public void loadFile(String filename, Context context)
 	{
-        Log.d("load", "Entering\n");
-        if (filename == null)
-            Log.d("load", "null filename\n");
-        if (context == null)
-            Log.d("load", "null context\n");
-
 		InputStream in;
 
 		try
