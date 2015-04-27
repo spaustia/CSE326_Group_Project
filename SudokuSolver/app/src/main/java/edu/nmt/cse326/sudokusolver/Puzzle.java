@@ -112,9 +112,12 @@ public class Puzzle
         }
 	}
 
-	public void saveFile(String filename, Context context)
+	public void saveFile(String filename)
 	{
 		OutputStream out;
+        if (board == null)
+            return;
+        Context context = board.getActivity().getBaseContext();
 
 		try
 		{
@@ -129,17 +132,20 @@ public class Puzzle
 		}
 		catch (FileNotFoundException e)
 		{
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 	}
 
-	public void loadFile(String filename, Context context)
+	public void loadFile(String filename)
 	{
 		InputStream in;
+        if (board == null)
+            return;
+        Context context = board.getActivity().getBaseContext();
 
 		try
 		{

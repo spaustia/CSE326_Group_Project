@@ -23,7 +23,7 @@ public class LoadDialogFragment extends DialogFragment {
                 .setPositiveButton(R.string.load, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        Puzzle.getInstance().loadFile(input.getText().toString(), getActivity().getBaseContext());
+                        Puzzle.getInstance().loadFile(input.getText().toString());
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

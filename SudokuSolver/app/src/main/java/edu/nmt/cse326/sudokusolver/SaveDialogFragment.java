@@ -23,7 +23,7 @@ public class SaveDialogFragment extends DialogFragment {
                 .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        Puzzle.getInstance().saveFile(input.getText().toString(), getActivity().getBaseContext());
+                        Puzzle.getInstance().saveFile(input.getText().toString());
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
