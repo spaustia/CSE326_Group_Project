@@ -58,8 +58,6 @@ public class GridViewAdapter extends BaseAdapter
 			mSpinner = (Spinner)inflater.inflate(R.layout.spinner, parent, false);
 			setSpinnerForPosition(mSpinner, position);
 
-			// mSpinner.setMinimumHeight(mSpinner.getWidth());
-
 			mSpinner.setTag(position);
 
 			mSpinner.setAdapter(adapter);
@@ -83,13 +81,13 @@ public class GridViewAdapter extends BaseAdapter
 		}
 
 		mSpinner.getLayoutParams().height = (parent.getRootView().findViewById(R.id.gridview).getWidth() / 9);
-		// parent.getRootView().findViewById(R.id.gridview).setMinimumHeight(parent.getRootView().findViewById(R.id.gridview).getWidth());
 
 		mSpinner.setSelection(Puzzle.getInstance().getCell(position));
 
 		return mSpinner;
 	}
 
+    // Set spinner borders for clean board
 	private void setSpinnerForPosition(Spinner spinner, int position)
 	{
 		if (position % 3 == 0)
@@ -125,7 +123,6 @@ public class GridViewAdapter extends BaseAdapter
 	// Setup and return an ArrayAdapter for a spinner
 	private void createSpinAdapter()
 	{
-
 		adapter = ArrayAdapter.createFromResource(mContext, R.array.spinner_array, R.layout.textview);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 	}

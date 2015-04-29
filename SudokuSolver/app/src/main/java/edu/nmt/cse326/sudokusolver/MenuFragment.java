@@ -57,7 +57,6 @@ public class MenuFragment extends Fragment
 			{
                 SaveDialogFragment fragment = new SaveDialogFragment();
                 fragment.show(getActivity().getFragmentManager(), "Save");
-//				Puzzle.getInstance().saveFile("temp", getActivity());
 			}
 		});
 

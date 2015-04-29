@@ -93,12 +93,7 @@ public class Puzzle
 
 	public void solve()
 	{
-//        boolean[][] changed = new boolean[9][9];
-//        for (int i = 0; i < 9; i++) {
-//            for (int j = 0; j < 9; j++) {
-//                changed[i][j] = (cells[i][j] == 0);
-//            }
-//        }
+
 		Solver s = new Solver(cells);
 		int [][] solution = s.solve();
         if (solution == null)

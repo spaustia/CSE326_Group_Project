@@ -47,18 +47,13 @@ public class BoardFragment extends Fragment
 				{
 					i_val = Integer.parseInt(val);
 				}
-				catch (Exception e)
-				{
+				catch (Exception e){}
 
-				}
 				Puzzle.getInstance().setCell((int)spinner.getTag(), i_val);
 			}
 
 			@Override
-			public void onNothingSelected(AdapterView <?> parentView)
-			{
-				// your code here
-			}
+			public void onNothingSelected(AdapterView <?> parentView){}
 
 		};
 
