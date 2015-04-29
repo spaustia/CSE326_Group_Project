@@ -18,15 +18,24 @@ import java.util.List;
 public class MenuFragment extends Fragment
 {
 
-	private List <Spinner> mSpinners;
-
-	@Override
-	public void onCreate(Bundle savedInstanceState)
+    /**
+     *  Calls super.onCreate and nothing else
+     *
+     * @param savedInstanceState saved instance of the fragment
+     */
+    @Override
+    public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 
 	}
-
+    /**
+     *  Calls super.onCreate and nothing else
+     *
+     * @param inflater LayoutInflater from parent view
+     * @param parent parent ViewGroup
+     * @param savedInstanceState saved instance of the fragment
+     */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
 	{
