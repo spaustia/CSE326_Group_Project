@@ -13,6 +13,12 @@ import android.widget.EditText;
  * Created by Max on 4/25/2015.
  */
 public class SaveDialogFragment extends DialogFragment {
+
+    /**
+     *  Called when fragment is created
+     *
+     * @param savedInstanceState state of a saved instance
+     */
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
