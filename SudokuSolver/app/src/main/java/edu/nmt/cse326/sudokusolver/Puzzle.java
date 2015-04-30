@@ -19,6 +19,11 @@ public class Puzzle
 	private static Puzzle instance = null;
     public BoardFragment board;
 
+    /**
+     * Gets the puzzle instance.
+     *
+     * @return A reference to the puzzle
+     */
 	public static Puzzle getInstance()
 	{
 		if (instance == null)
@@ -28,6 +33,9 @@ public class Puzzle
 		return instance;
 	}
 
+    /**
+     * Initializes the int array to 0.
+     */
 	protected Puzzle()
 	{
 		cells = new int[9][9];
@@ -42,6 +50,12 @@ public class Puzzle
 		}
 	}
 
+    /**
+     * Sets the value of a cell.
+     *
+     * @param pos The position of the cell to set.
+     * @param val The new value of the cell.
+     */
 	public void setCell(int pos, int val)
 	{
 
@@ -53,6 +67,12 @@ public class Puzzle
 		cells[pos / 9][pos % 9] = val;
 	}
 
+    /**
+     * Sets the value in the puzzle and updates the board.
+     *
+     * @param pos The position of the cell to set.
+     * @param val The new value of the cell.
+     */
 	public void setCellAndSpinner(int pos, int val)
 	{
 
@@ -71,11 +91,20 @@ public class Puzzle
 
     }
 
+    /**
+     * Get the value of a cell in the puzzle.
+     *
+     * @param pos The position of the cell. Between 0 and 80.
+     * @return The value at the position.
+     */
 	public int getCell(int pos)
 	{
 		return cells[pos / 9][pos % 9];
 	}
 
+    /**
+     * Sets all cells in the puzzle to 0.
+     */
 	public void clear()
 	{
 		for (int i = 0; i < 9; i++)
@@ -91,6 +120,10 @@ public class Puzzle
 		}
 	}
 
+    /**
+     * Solves the current puzzle.
+     * Fills the puzzle array with the solution and updates the board.
+     */
 	public void solve()
 	{
 
@@ -107,6 +140,11 @@ public class Puzzle
         }
 	}
 
+    /**
+     * Saves the content of the puzzle to a file.
+     *
+     * @param filename The file to store the puzzle in.
+     */
 	public void saveFile(String filename)
 	{
 		OutputStream out;
@@ -126,15 +164,16 @@ public class Puzzle
 
 		}
 		catch (FileNotFoundException e)
-		{
-//			e.printStackTrace();
-		}
+		{ }
 		catch (IOException e)
-		{
-//			e.printStackTrace();
-		}
+		{ }
 	}
 
+    /**
+     * Fill the puzzle with the contents of a file.
+     *
+     * @param filename The name of the file to load.
+     */
 	public void loadFile(String filename)
 	{
 		InputStream in;
@@ -154,15 +193,16 @@ public class Puzzle
 
 		}
 		catch (FileNotFoundException e)
-		{
-//			e.printStackTrace();
-		}
+		{ }
 		catch (IOException e)
-		{
-//			e.printStackTrace();
-		}
+		{ }
 	}
 
+    /**
+     * Gets the contents of the puzzle as a string.
+     *
+     * @return The puzzle string.
+     */
 	public String toString()
 	{
 		String str = "";
@@ -180,5 +220,4 @@ public class Puzzle
 
 		return str;
 	}
-
 }

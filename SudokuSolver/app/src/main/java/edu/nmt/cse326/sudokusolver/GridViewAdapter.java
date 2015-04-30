@@ -39,6 +39,7 @@ public class GridViewAdapter extends BaseAdapter
     /**
      * Returns the total number of view objects
      *
+     *  @return The total number of view objects.
      */
 	public int getCount()
 	{
@@ -49,6 +50,7 @@ public class GridViewAdapter extends BaseAdapter
      * Return the object at position
      *
      * @param position return the item at the given position
+     * @return The spinner at the given position.
      */
 	public Object getItem(int position)
 	{
